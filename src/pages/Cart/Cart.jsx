@@ -43,63 +43,72 @@ async function getProducts(){
         getProducts()
       },[items]);
 
+
+
+//component for each product in cart
 function CartProduct({thumbnail, title,price,brand,quantity,id}){
 
   return(
  
-    <div>
-      <div className="image-container">
-      <img src={thumbnail} alt={title} />
-    </div>
+    <div className='cart-product'>
+        <div className="image-container">
+            <img src={thumbnail} alt={title} />
+        </div>
 
-    <div className="txt-container">
-      <h1>{title}</h1>
-      <p>brand: {brand}</p>
-      <p>price:  ${Math.round(price)}</p>
-    </div>
+          <div className="txt-container">
+            <h1>{title}</h1>
+            <p>brand: {brand}</p>
+            <p>price:  ${Math.round(price)}</p>
+          </div>
 
 
     
-  <div className="quantity-container">
+          <div className="quantity-container">
 
 
-      <FaRegPlusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='inc' onClick={()=>{
-         dispatch(incrementQuantity ({id}));
-      }}/>
+             <FaRegPlusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='inc' onClick={()=>{
+              dispatch(incrementQuantity ({id}));
+             }}/>
+              <span>{quantity}</span>
+              <FaRegMinusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='dec'  onClick={()=>{
+                dispatch(decermentQuantity ({id}));
+              }}/> 
+          </div>
 
 
-     <span>{quantity}</span>
+          <div className="remove-btn">
+            <button className="remove-btn" onClick={()=>{
+                      dispatch(removeFromCart({id}))
+                    }}> Remove item</button>
+         </div>
 
-      <FaRegMinusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='dec'  onClick={()=>{
-        dispatch(decermentQuantity ({id}));
-      }}/> 
-
-      
-
-    </div>
-
-    <div className="remove-btn">
-      <button className="remove-btn" onClick={()=>{
-        dispatch(removeFromCart({id}))
-      }}> 🗑️</button>
-    </div>
-
-    </div>
+       </div>
  
-  )
+  );
 }
-const totalPrice = products.reduce((sum,item)=>sum + item.price * item.quantity,0);
-console.log(totalPrice);
-  return (
-    <div className='cart-container'>
-    <h1>My Cart</h1>
-{products.length == 0 && <div>
-  <h3>Add items in your cart...🛒</h3>
-  <Link to="/products">Shop Now</Link>
-  
-  </div>}
 
-    <div className="products-cart">
+
+
+//calculate total price of all items in cart
+const totalPrice = products.reduce((sum,item)=>sum + item.price * item.quantity,0).toFixed(2);
+console.log(totalPrice);
+
+
+
+
+
+
+
+
+  return (
+    <div className='mycart-container'>
+    <h1>My Cart</h1>
+
+    {loading && <h1>Loading products...</h1>}
+    {error && <p>{error}</p>}
+    {products.length === 0 &&<div><h3>Add items in your cart...🛒</h3><Link to="/products">Shop Now</Link></div>}
+
+    <div className="myproducts-cart">
       {products.map((item)=>(
 
         <CartProduct 
@@ -117,8 +126,8 @@ console.log(totalPrice);
 
      </div>
       
-    {products.length > 0 && <div>
-      <h1>Total Price =$ {totalPrice}</h1>
+    {products.length > 0 && <div className="total-price">
+      <h1>Total Price =<span>$ {totalPrice} </span></h1>
       </div>}
     
     
