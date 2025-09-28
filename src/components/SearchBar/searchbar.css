@@ -1,0 +1,32 @@
+.search-container{
+  display:flex;
+  justify-content:center;
+  margin:auto;
+  max-width:400px;
+  width:100%;
+  .search-wrapper{
+    display:flex;
+    width:100%;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid #ccc;
+
+
+
+   .search-input{
+    padding:10px;
+    border:1px solid yellow;
+    outline:none;
+    flex:1;
+   }
+.search-icon{
+  color:black;
+  padding:5px;
+  display:flex;
+  align-items: center;
+justify-content: center;
+background-color:yellow;
+cursor:pointer;
+}
+  }
+}
