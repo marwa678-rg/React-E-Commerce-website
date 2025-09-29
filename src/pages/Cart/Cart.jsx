@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaRegMinusSquare } from "react-icons/fa";
 import'./cart.css';
-import { decermentQuantity, incrementQuantity, removeFromCart } from '../../store/slices/cartSlice/cartSlice';
+import { decrementQuantity, incrementQuantity, removeFromCart } from '../../store/slices/cartSlice/cartSlice';
 
 export const Cart = () => {
 const {items} = useSelector((state)=>state.cart);
@@ -46,7 +46,7 @@ async function getProducts(){
 
 
 //component for each product in cart
-function CartProduct({thumbnail, title,price,brand,quantity,id}){
+function CartProduct({thumbnail, title,price,brand,quantity,id,stock}){
 
   return(
  
@@ -59,6 +59,7 @@ function CartProduct({thumbnail, title,price,brand,quantity,id}){
             <h1>{title}</h1>
             <p>brand: {brand}</p>
             <p>price:  ${Math.round(price)}</p>
+            <p>Avaliable stock: {stock}</p>
           </div>
 
 
@@ -67,11 +68,11 @@ function CartProduct({thumbnail, title,price,brand,quantity,id}){
 
 
              <FaRegPlusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='inc' onClick={()=>{
-              dispatch(incrementQuantity ({id}));
+              dispatch(incrementQuantity ({id,stock}));
              }}/>
               <span>{quantity}</span>
               <FaRegMinusSquare  style={{fontSize:"30px",cursor:"pointer"}} className='dec'  onClick={()=>{
-                dispatch(decermentQuantity ({id}));
+                dispatch(decrementQuantity({id}));
               }}/> 
           </div>
 
@@ -90,7 +91,7 @@ function CartProduct({thumbnail, title,price,brand,quantity,id}){
 
 
 //calculate total price of all items in cart
-const totalPrice = products.reduce((sum,item)=>sum + item.price * item.quantity,0).toFixed(2);
+const totalPrice = products.reduce((sum,item)=>sum + (item.price * item.quantity),0).toFixed(2);
 console.log(totalPrice);
 
 
@@ -119,6 +120,7 @@ console.log(totalPrice);
         key={item.id}
         id={item.id}
         quantity={item.quantity}
+        stock={item.stock}
         />
 
       ))}
