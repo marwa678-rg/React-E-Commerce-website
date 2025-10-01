@@ -4,14 +4,13 @@ import"./home.css";
 import Carousel from"react-bootstrap/Carousel";
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { useDispatch, useSelector } from 'react-redux';
-import{ProductCard}from"../../components/ProductCard/ProductCard";
 import{clearSearch}from"../../store/slices/searchSlice/searchSlice";
 import { useEffect } from 'react';
-
+import{Link}from"react-router-dom";
 
 
 export const Home = () => {
-const {loading,error,results}=useSelector((state)=>state.search)
+const {query,loading,error,results}=useSelector((state)=>state.search)
 const dispatch=useDispatch();
 //unmount of Home should clear the searchbar => using useEffect =>high ordered function
 
@@ -20,7 +19,7 @@ useEffect(()=>{
 return()=>{
   dispatch(clearSearch());
 }
-},[]);
+},[dispatch]);
   
   return (
     <div className='home-container'>
@@ -72,22 +71,33 @@ return()=>{
       </Carousel>
                 {/*Display-products from searchinput  */}
                 <div className="search-products">
-                    <h1>Search Results</h1>
+                   <h1 style={{textAlign:"center",fontWeight:"bold"}}>Search Results</h1>
                         {loading && <p>loading...</p>}
                         {error && <p>Error:{error}</p>}
-                    <div className="product-grid">
 
-                 
-                  {results.map((item)=>(
-                    <ProductCard 
-                    key={item.id}
-                    thumbnail={item.thumbnail}
-                    brand={item.brand}
-                    title={item.title}
-                    price={item.price}
-                    availabilityStatus={item.availabilityStatus}/>
-                  ))}
-                   
+                    <div className="product-grid">
+                        
+            {results.length == 0 ?(<p style={{textAlign:"center",fontWeight:"bold", color:"darkred"}}>No Product Found</p>):(
+
+                    results.map((p)=>(
+                  <div className="product-card-search" key={p.id}>
+                      <div className="image"> <img src={p.thumbnail} alt={p.title} /></div>
+                      <div className="txt-product">
+                        <h1>{p.title}</h1>
+                        <h3> Brand: {p.brand}</h3>
+                        <p>discription: {p.description}</p>
+                        <p>price: ${Math.round(p.price)}</p>
+                    
+                      </div>
+                      <div className="login-link">
+                        <Link to={"/login"}>Join Us Now</Link>
+                      </div>
+                  </div>
+                ))
+
+
+            ) }     
+                
                 
 
                 
