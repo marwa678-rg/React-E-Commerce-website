@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from"axios";
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import{useDispatch}from"react-redux";
 import { setError, setLoading } from '../../store/slices/productsSlice/ProductsSlice';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import { addToCart } from '../../store/slices/cartSlice/cartSlice';
 
 export const ProductDetails = () => {
 const [product,setProduct]=useState({})
@@ -21,6 +22,9 @@ const [product,setProduct]=useState({})
  const dispatch = useDispatch();
 const loading = useSelector((state)=>state.products.loading);
 const error = useSelector((state)=>state.products.error);
+const navigate = useNavigate();
+const stock=product.stock;
+
 //'https://dummyjson.com/products/1'
 
 async function fetchProductById(){
@@ -44,6 +48,16 @@ dispatch(setError(error.message))
 useEffect(()=>{
   fetchProductById();
 },[id])
+
+
+
+
+function handleAddToCart(){
+dispatch(addToCart({stock,id}) );
+navigate('/cart')
+}
+
+function handleBuyNow(){};
 
 
 if(loading)return <Spinner animation="border" />
@@ -75,7 +89,7 @@ return(
 
 
                <div className="button-container">
-                  <button className="add-btn">Add To Cart</button>
+                  <button className="add-btn" onClick={handleAddToCart}>Add To Cart</button>
                   <button className="buy-btn">Buy Now</button>
                </div>
                

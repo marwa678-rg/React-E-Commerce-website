@@ -7,21 +7,27 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import"./header.css";
 import { SearchBar } from '../SearchBar/SearchBar';
 import{NavLink, useNavigate}from"react-router-dom";
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import{logout}from"../../store/slices/userSlice/userSlice";
 
 export const Header = () => {
 const[isOpen,setIsOpen] = useState(false);
 const navigate= useNavigate();
 const {items} =useSelector((state)=>state.cart);
-
+const {isLoggedIn}= useSelector(state=>state.user);
+const dispatch = useDispatch();
 
 function handleIsOpen(){
   setIsOpen((prev)=>!prev);
   };
 
 
-//setIsOpen((prev)=>!prev);
+
+//logout function onClick
+function handleLogout(){
+dispatch(logout());
+}
+
 
 
 
@@ -29,7 +35,7 @@ function handleIsOpen(){
     <div className='header-container'>
 
       <div>
-        <AiFillAmazonCircle className='logo' style={{fontSize:"35px",color:"yellow"}}/>
+        <AiFillAmazonCircle className='logo' style={{color:"yellow",cursor:"pointer"}}/>
       </div>
 
       <div className='location-container'>
@@ -42,18 +48,17 @@ function handleIsOpen(){
             </div>
         </div>
 
-   
-      <div className="search-container">
-        <SearchBar/>
-      </div>
-
         <div className={`nav ${isOpen ? "isActive" :""}`}>
           <div className="close-btn"onClick={()=>{setIsOpen(false)}}>
             <IoCloseCircleSharp style={{fontSize:"30px",cursor:"pointer"}}/>
           </div>
+          
           <NavLink to={"/"}>Home</NavLink>
           <NavLink to={"/products"}>Products</NavLink>
-          <NavLink to={"/login"}>Login</NavLink>
+
+
+          {!isLoggedIn &&  (  <NavLink to={"/login"}>Login</NavLink>)}
+        {isLoggedIn && (<button className="logout-btn" onClick={handleLogout}>logout</button>)}
         </div>
       
    
@@ -66,9 +71,10 @@ function handleIsOpen(){
               </div>
 
               <div>
-                <CgShoppingCart style={{fontSize:"30px"}} onClick={()=>{
+               <CgShoppingCart style={{fontSize:"30px"}} onClick={()=>{
                       navigate("/cart");
                 }} />
+                
               </div>
           </div>
               

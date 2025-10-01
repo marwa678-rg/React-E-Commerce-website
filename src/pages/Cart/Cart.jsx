@@ -4,19 +4,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from"axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaRegMinusSquare } from "react-icons/fa";
 import'./cart.css';
 import { decrementQuantity, incrementQuantity, removeFromCart } from '../../store/slices/cartSlice/cartSlice';
+import{toast}from"react-hot-toast";
+
+
+
+
+
+
+
 
 export const Cart = () => {
 const {items} = useSelector((state)=>state.cart);
 const[products,setProducts]=useState([]);
 const dispatch=useDispatch();
 const{loading,error}= useSelector(state=>state.products);
-
-
+const{isLoggedIn,user}= useSelector(state=>state.user);
+const navigate= useNavigate();
 //any async function it return  arrray of promise to solve this by promise.all that take array and turned it from pending to fullfil
 async function getProducts(){
   try {
@@ -98,8 +106,13 @@ console.log(totalPrice);
 
 
 
-
-
+//if not logged in redirect to login page
+useEffect(()=>{
+  if(isLoggedIn === false){
+    navigate("/login");
+    toast.error("please login to access cart");
+  }
+},[isLoggedIn]);
 
   return (
     <div className='mycart-container'>

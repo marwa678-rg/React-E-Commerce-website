@@ -12,17 +12,47 @@ color:white;
 box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 z-index:999;
 
+
+
+.logo{
+  margin:5px;
+  font-size:50px;
+}
+
+
+.logout-btn{
+  background-color:#09122C;
+  border:none;
+  color:white;
+  padding:10px;
+  cursor:pointer;
+
+  &:hover{
+     border:1px solid white;
+    padding:8px;
+    border-radius:7px;
+    color:yellow'
+   }
+   
+}
+
 .location-container{
   display:flex;
   justify-content: center;
   align-items: center;
-  padding:8px;
-  
+  padding:5px;
+  margin:5px;
+   .txt-location{
+      font-size:small;
+      text-align:center;
+    }
  &:hover{
   border:1px solid white;
   cursor: pointer;
-border-radius:7px;
+    border-radius:7px;
+   
  }
+
 }
 
 .icons-container{
@@ -39,7 +69,8 @@ z-index:1001;
   flex-direction: column;
  align-items:center;
  justify-content: center;
- padding:8px;
+ margin:4px;
+ padding:6px;
 &:hover{
    border:1px solid white;
   cursor: pointer;
@@ -51,7 +82,7 @@ font-weight: bold;
 color:yellow;
 margin-bottom:0px;
 font-size:large;
-padding:10px;
+padding:5px;
  }
 
 }
@@ -145,6 +176,8 @@ a.active{
 
   }
 
+  
+
 }
 
 .toggle-bar{
@@ -172,5 +205,6 @@ a.active{
       color:rgb(238, 1, 1);
     }
   }
+
 
 }

@@ -12,6 +12,7 @@ import{Products}from"./pages/Products/Products.jsx";
 import{ProductDetails}from"./pages/ProductDetails/ProductDetails.jsx";
 import{Login}from"./pages/Login/Login.jsx";
 import{Cart}from"./pages/Cart/Cart.jsx";
+import { useSelector } from 'react-redux';
 
 
 
@@ -19,7 +20,7 @@ import{Cart}from"./pages/Cart/Cart.jsx";
 
 
 function App() {
- 
+const isLoggedIn = useSelector((state)=>state.user);
   return (
     <>
 <Toaster />
