@@ -3,12 +3,24 @@ import React from 'react'
 import"./home.css";
 import Carousel from"react-bootstrap/Carousel";
 import { SearchBar } from '../../components/SearchBar/SearchBar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import{ProductCard}from"../../components/ProductCard/ProductCard";
+import{clearSearch}from"../../store/slices/searchSlice/searchSlice";
+import { useEffect } from 'react';
+
+
+
 export const Home = () => {
-const {items,loading,error} = useSelector((state)=>state.products);
+const {loading,error,results}=useSelector((state)=>state.search)
+const dispatch=useDispatch();
+//unmount of Home should clear the searchbar => using useEffect =>high ordered function
 
+useEffect(()=>{
 
+return()=>{
+  dispatch(clearSearch());
+}
+},[]);
   
   return (
     <div className='home-container'>
@@ -60,18 +72,20 @@ const {items,loading,error} = useSelector((state)=>state.products);
       </Carousel>
                 {/*Display-products from searchinput  */}
                 <div className="search-products">
-                    <h1>searched items:</h1>
+                    <h1>Search Results</h1>
                         {loading && <p>loading...</p>}
                         {error && <p>Error:{error}</p>}
                     <div className="product-grid">
 
-                      
-                  {items.map((item)=>(
+                 
+                  {results.map((item)=>(
                     <ProductCard 
-                    id={item.id}
+                    key={item.id}
                     thumbnail={item.thumbnail}
                     brand={item.brand}
-                    title={item.title}/>
+                    title={item.title}
+                    price={item.price}
+                    availabilityStatus={item.availabilityStatus}/>
                   ))}
                    
                 

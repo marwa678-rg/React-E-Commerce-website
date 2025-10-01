@@ -2,6 +2,8 @@ import{configureStore}from"@reduxjs/toolkit";
 import ProductsReducer from"./slices/productsSlice/ProductsSlice.jsx";
 import cartReducer from"./slices/cartSlice/cartSlice.jsx";
 import userReducer from"./slices/userSlice/userSlice.jsx";
+import searchReducer from "./slices/searchSlice/searchSlice.jsx";
+
 
 
 
@@ -10,5 +12,6 @@ export const store = configureStore({
     products:ProductsReducer,
     cart:cartReducer,
     user:userReducer,
+   search:searchReducer,
   },
 });
