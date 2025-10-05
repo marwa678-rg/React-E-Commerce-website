@@ -69,6 +69,7 @@ try {
           rating={Math.round(item.rating)}
           title={item.title}
           id={item.id}
+          stock={item.stock}
           />
       );
         })}

@@ -59,7 +59,7 @@ box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     color:white;
     font-size:large;
     cursor:pointer;
-    transition:0.3s;
+    transition:0.3;
     &:hover{
       background-color:#FF6500;
       transform:scale(1.02);
@@ -84,7 +84,7 @@ box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
  .myproducts-cart{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:5px;
+  gap:15px;
   width:100%;
   justify-items:center;
   align-items:center;
@@ -104,8 +104,36 @@ box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   span{
     color:#ff6500;
   }
+  @media(max-width:768){
+    h1{
+      font-size:small;
+    }
   }
- 
+  }
+ .continue-btn{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color:#000B58;
+  font-weight: bold;
+  font-size:large;
+  cursor:pointer;
+   padding:10px;
+   border:2px solid #000B58;
+   border-radius:6px;
+  transition:0.3;
+  &:hover{
+ background-color:#000B58 ;
+ color:white;
+   
+ }
+
+
 }
+
+}
+
+
 
 }

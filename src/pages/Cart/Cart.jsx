@@ -10,6 +10,7 @@ import { FaRegMinusSquare } from "react-icons/fa";
 import'./cart.css';
 import { decrementQuantity, incrementQuantity, removeFromCart } from '../../store/slices/cartSlice/cartSlice';
 import{toast}from"react-hot-toast";
+import { IoArrowBackCircle } from "react-icons/io5";
 
 
 
@@ -18,6 +19,7 @@ import{toast}from"react-hot-toast";
 
 
 
+//https://dummyjson.com/products/1
 export const Cart = () => {
 const {items} = useSelector((state)=>state.cart);
 const[products,setProducts]=useState([]);
@@ -25,11 +27,13 @@ const dispatch=useDispatch();
 const{loading,error}= useSelector(state=>state.products);
 const{isLoggedIn,user}= useSelector(state=>state.user);
 const navigate= useNavigate();
+
 //any async function it return  arrray of promise to solve this by promise.all that take array and turned it from pending to fullfil
 async function getProducts(){
   try {
             
-        const newProducts = await Promise.all( items.map(async (item)=>{
+        const newProducts = await Promise.all( 
+          items.map(async (item)=>{
         const response = await axios.get(`https://dummyjson.com/products/${item.id}`);
 
         return {...response.data,quantity:item.quantity,id:item.id};
@@ -48,14 +52,14 @@ async function getProducts(){
 
 }
       useEffect(()=>{
-        getProducts()
-      },[items]);
+        getProducts();
+      },[items])
 
 
 
 //component for each product in cart
-function CartProduct({thumbnail, title,price,brand,quantity,id,stock}){
-
+   function CartProduct({thumbnail, title,price,brand,quantity,id,stock}){
+   
   return(
  
     <div className='cart-product'>
@@ -85,8 +89,8 @@ function CartProduct({thumbnail, title,price,brand,quantity,id,stock}){
           </div>
 
 
-          <div className="remove-btn">
-            <button className="remove-btn" onClick={()=>{
+          <div className='remove-btn'>
+            <button  onClick={()=>{
                       dispatch(removeFromCart({id}))
                     }}> Remove item</button>
          </div>
@@ -98,21 +102,42 @@ function CartProduct({thumbnail, title,price,brand,quantity,id,stock}){
 
 
 
-//calculate total price of all items in cart
-const totalPrice = products.reduce((sum,item)=>sum + (item.price * item.quantity),0).toFixed(2);
-console.log(totalPrice);
 
 
 
 
 
-//if not logged in redirect to login page
+
+
+
+
+
+       
+        
+
+      //if not logged in redirect to login page
 useEffect(()=>{
   if(isLoggedIn === false){
     navigate("/login");
     toast.error("please login to access cart");
   }
 },[isLoggedIn]);
+
+
+//calculate total price of all items in cart
+const totalPrice = products.reduce((sum,item)=>sum + (item.price * item.quantity),0).toFixed(2);
+//console.log(totalPrice);
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className='mycart-container'>
@@ -126,11 +151,11 @@ useEffect(()=>{
       {products.map((item)=>(
 
         <CartProduct 
+        key={item.id}
         title={item.title}
         thumbnail={item.thumbnail}
         brand={item.brand}
         price={item.price}
-        key={item.id}
         id={item.id}
         quantity={item.quantity}
         stock={item.stock}
@@ -143,6 +168,9 @@ useEffect(()=>{
       
     {products.length > 0 && <div className="total-price">
       <h1>Total Price =<span>$ {totalPrice} </span></h1>
+      <Link to="/products" className="continue-btn">
+      <IoArrowBackCircle className='arrow-icon' style={{fontSize:"25px",color:"#000B58 ",marginRight:"5px"}}/> Continue Shopping 
+      </Link>
       </div>}
     
     
