@@ -48,7 +48,7 @@ overflow:hidden;
     font-size:medium;
     font-weight:500;
     @media(max-width:768){
-      fontsize:small;
+      font-size:small;
       font-weight:400px;
     }
   }
@@ -94,9 +94,7 @@ margin:10px;
           font-size:large;
         }
       }
-      h3{
-        
-      }
+      
       p{
         text-transform:capitalize;
         font-size:medium;

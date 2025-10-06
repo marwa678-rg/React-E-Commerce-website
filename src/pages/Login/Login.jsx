@@ -51,7 +51,7 @@ navigate("/cart");
       <Form className="login-form" onSubmit={handleFormSubmit}>
         
       <Form.Group className='mb-3' controlId='formBasicName'>
-        <Form.Label>Your name</Form.Label>
+        <Form.Label className='label'>Your name</Form.Label>
         <Form.Control 
         className="login-input" 
         type="text" 
@@ -62,7 +62,7 @@ navigate("/cart");
 
 
       <Form.Group className='mb-3 ' controlId='formBasicPassword'>
-        <Form.Label>Your password</Form.Label>
+        <Form.Label    className='label'   >Your password</Form.Label>
         <Form.Control 
         className="login-input" 
         type="password" 
